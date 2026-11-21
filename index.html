@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ordinary Light</title>
+<meta name="theme-color" content="#F3F2EF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="fonts/fonts.css">
+<!-- Archivo Black: SIL Open Font License. Fonts from Field Notes by Laurence McDonald (MIT). -->
+<style>
+  @font-face{font-family:'Archivo Black';src:url(fonts/archivo-black.woff2) format('woff2');font-weight:400;font-display:swap;}
+  :root{
+    --bg:#F3F2EF;--ink:#141312;--gray:#6E6A62;--faint:#A7A196;--line:#DCD8D0;--tile:#E8E6E1;
+    --shadow:0 1px 2px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12);
+    --lift:0 2px 4px rgba(0,0,0,.1),0 24px 50px rgba(0,0,0,.25);
+    --serif:'EB Garamond','Times New Roman',Georgia,serif;
+    --sans:'Inter',system-ui,-apple-system,sans-serif;
+    --display:'Archivo Black','Arial Black',system-ui,sans-serif;
+    --side:290px;--r:12px;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121211;--ink:#EEEBE5;--gray:#A19C93;--faint:#66625C;--line:#2A2825;--tile:#1D1C1A;--shadow:0 1px 2px rgba(0,0,0,.5),0 10px 28px rgba(0,0,0,.5);--lift:0 2px 4px rgba(0,0,0,.5),0 28px 60px rgba(0,0,0,.7);}}
+  :root[data-theme="dark"]{--bg:#121211;--ink:#EEEBE5;--gray:#A19C93;--faint:#66625C;--line:#2A2825;--tile:#1D1C1A;--shadow:0 1px 2px rgba(0,0,0,.5),0 10px 28px rgba(0,0,0,.5);--lift:0 2px 4px rgba(0,0,0,.5),0 28px 60px rgba(0,0,0,.7);}
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:var(--bg);color:var(--ink);}
+  body{font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  a{color:inherit;}
+
+  /* ---------- fixed side column ---------- */
+  aside{position:fixed;left:0;top:0;bottom:0;width:var(--side);padding:34px 30px 28px;display:flex;flex-direction:column;gap:20px;z-index:100;background:var(--bg);}
+  aside h1{font-family:var(--display);font-weight:400;font-size:42px;line-height:.9;letter-spacing:-.02em;margin:0;text-transform:uppercase;}
+  .dots{display:grid;grid-template-columns:repeat(19,1fr);gap:2px;width:154px;}
+  .dots i{aspect-ratio:1;background:var(--ink);opacity:.1;transition:opacity .3s ease;}
+  .dots i.on{opacity:.95;}
+  aside nav{display:flex;gap:16px;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;margin-top:auto;}
+  aside nav a{text-decoration:none;color:var(--gray);} aside nav a:hover{color:var(--ink);}
+  aside .intro{font-size:11.5px;line-height:1.5;color:var(--gray);max-width:210px;margin:0;}
+  aside .intro b{font-weight:500;color:var(--ink);}
+  aside .where{font-size:11px;letter-spacing:.06em;text-transform:lowercase;color:var(--ink);min-height:1.5em;}
+  aside .also{font-size:10.5px;letter-spacing:.05em;text-transform:lowercase;color:var(--faint);line-height:1.8;}
+  aside .also a{color:var(--gray);text-decoration:none;border-bottom:1px solid var(--line);white-space:nowrap;}
+  aside .also a:hover{color:var(--ink);}
+
+  main{margin-left:var(--side);padding:0 28px 80px 0;}
+
+  /* ---------- pile: cards dealt on a table, draggable ---------- */
+  .pile{position:relative;height:max(100vh,640px);}
+  .pile .more{position:absolute;left:0;right:0;bottom:18px;text-align:center;font-size:10.5px;letter-spacing:.1em;text-transform:lowercase;color:var(--gray);pointer-events:none;z-index:0;}
+  .pile .more span{display:inline-block;animation:nudge 1.6s ease-in-out infinite;}
+  @keyframes nudge{50%{transform:translateY(5px);}}
+  .pile .label,.grid-sec .label{position:absolute;left:0;top:28px;font-size:10.5px;letter-spacing:.08em;text-transform:lowercase;color:var(--faint);z-index:1;}
+  .card{position:absolute;left:0;top:0;cursor:grab;touch-action:pan-y;will-change:transform;}
+  .card.drag{cursor:grabbing;}
+  .face{border-radius:var(--r);overflow:hidden;background:var(--tile);box-shadow:var(--shadow);
+    transform:translateY(70vh) rotate(var(--deal,20deg));opacity:0;
+    transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .5s ease,box-shadow .25s ease;transition-delay:var(--d,0s);}
+  .pile.in .face{transform:none;opacity:1;}
+  .card.drag .face{box-shadow:var(--lift);transition:box-shadow .25s ease,transform .25s ease;transform:scale(1.04);}
+  .face img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;user-select:none;-webkit-user-drag:none;}
+
+  /* ---------- grid: big rounded cards, two columns ---------- */
+  .grid-sec{position:relative;padding:80px 0 40px;}
+  .grid{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:18px;grid-auto-flow:dense;}
+  @media (max-width:1100px){.grid{grid-template-columns:1fr 1fr;}}
+  .tile{border-radius:var(--r);overflow:hidden;background:var(--tile);cursor:zoom-in;aspect-ratio:4/5;
+    opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1);}
+  .tile.in{opacity:1;transform:none;}
+  .tile img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.2,.7,.2,1);}
+  .tile:hover img{transform:scale(1.04);}
+  .tile.wide{grid-column:span 2;aspect-ratio:16/9;}
+
+  footer{margin-left:var(--side);padding:20px 0 40px;font-size:10px;letter-spacing:.06em;text-transform:lowercase;color:var(--faint);}
+  footer a{color:var(--gray);}
+
+  /* ---------- lightbox ---------- */
+  .lb{position:fixed;inset:0;z-index:900;display:none;grid-template-rows:1fr auto;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
+  .lb.open{display:grid;animation:fade .25s ease both;}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .lb .box{position:relative;display:flex;align-items:center;justify-content:center;padding:32px 72px 0;min-height:0;}
+  .lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:var(--r);box-shadow:var(--lift);}
+  .lb .info{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px 28px 22px;font-size:12px;letter-spacing:.06em;text-transform:lowercase;color:var(--gray);}
+  .lb .info a{color:var(--ink);}
+  .lb .pal{display:flex;gap:5px;} .lb .pal i{width:16px;height:16px;border-radius:4px;display:block;}
+  .lb button{background:none;border:0;color:var(--gray);cursor:pointer;font:inherit;}
+  .lb button:hover{color:var(--ink);}
+  .lb .nav{position:absolute;top:50%;transform:translateY(-50%);font-size:28px;padding:20px;}
+  .lb .prev{left:8px;} .lb .next{right:8px;}
+  .lb .x{position:absolute;top:14px;right:18px;font-size:12px;letter-spacing:.06em;}
+
+  @media (max-width:760px){
+    :root{--side:0px;--r:10px;}
+    aside{position:sticky;top:0;bottom:auto;width:auto;padding:14px 16px;gap:10px;flex-direction:row;flex-wrap:wrap;align-items:center;}
+    aside h1{font-size:22px;} aside .dots,aside .intro,aside .where,aside .also{display:none;}
+    aside nav{margin:0 0 0 auto;}
+    main{padding:0 16px 60px;}
+    .pile{height:115vh;}
+    .grid{gap:10px;}
+    footer{padding:16px;}
+    .lb .box{padding:16px 0 0;} .lb .nav{display:none;}
+    .lb .info{flex-direction:column;align-items:flex-start;padding:14px 16px 20px;}
+  }
+</style>
+</head>
+<body>
+<aside>
+  <h1>Ordinary<br>Light</h1>
+  <div class="dots" id="dots"></div>
+  <p class="intro"><b>Photographs by light.</b> The prints are on the table: move them around, open one, or scroll down for the grid.</p>
+  <div class="where" id="where"></div>
+  <nav><a href="#" id="shuffle">shuffle</a><a href="#" id="toGrid">grid ↓</a><a href="map.html">map →</a></nav>
+  <div class="also">by <a href="https://ivana-dicarlo.pages.dev/" target="_blank" rel="noopener">ivana di carlo</a><br>also: <a href="https://thesouldevotional.github.io/soul/" target="_blank" rel="noopener">soul</a> · <a href="https://thinkingcapsules.github.io/" target="_blank" rel="noopener">thinking capsules</a> · <a href="https://anthology-lab.github.io/" target="_blank" rel="noopener">anthology-lab</a></div>
+</aside>
+<main id="main"></main>
+<footer>design after readymag portfolios · fonts and colour logic from <a href="https://github.com/Laurencemdonald/field-notes" target="_blank" rel="noopener">field notes</a> by laurence mcdonald (mit license)</footer>
+
+<div class="lb" id="lb">
+  <div class="box">
+    <img id="lbImg" alt="">
+    <button class="nav prev" id="prev" aria-label="previous">←</button>
+    <button class="nav next" id="next" aria-label="next">→</button>
+    <button class="x" id="x">close ✕</button>
+  </div>
+  <div class="info"><span id="lbTxt"></span><span class="pal" id="lbPal"></span></div>
+</div>
+
+<script>
+"use strict";
+const MONTHS=["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+const fmtDate=iso=>{const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(iso||"");return m?MONTHS[+m[2]-1]+" "+(+m[3])+", "+m[1]:"";};
+const mapHref=it=>"map.html#"+encodeURIComponent(it.folder);
+const rnd=Math.random;
+const HAND=10; // how many prints land on the table at each visit
+const mobile=()=>innerWidth<=760;
+
+let order=[],piles=[],cur=0;
+
+/* ---------- sections: one chapter per place, alternating a pile and a grid as in the reference;
+   places with fewer than three photos end up together in a last grid ---------- */
+function plan(items){
+  const by=new Map();
+  items.forEach(it=>{if(!by.has(it.folder))by.set(it.folder,[]);by.get(it.folder).push(it);});
+  const groups=[...by.entries()].sort((a,b)=>(b[1][0].date||"").localeCompare(a[1][0].date||""));
+  const out=[],rest=[];let k=0;
+  groups.forEach(([place,g])=>{
+    if(g.length<3){rest.push(...g);return;}
+    const kind=k++%2?"grid":"pile";
+    if(kind==="pile"&&g.length>8){out.push({kind:"pile",place,items:g.slice(0,6)});out.push({kind:"grid",place,items:g.slice(6)});k++;}
+    else out.push({kind,place,items:g});
+  });
+  if(rest.length)out.push({kind:"grid",place:"",items:rest});
+  return out;
+}
+
+function build(items){
+  const main=document.getElementById("main");
+  order=items;
+  [{kind:"pile",place:"",items},{kind:"grid",place:"",items}].forEach(sec=>{
+    if(sec.kind==="pile"){
+      const el=document.createElement("section");el.className="pile";
+      el.innerHTML=`<div class="more"><span>scroll for all ${items.length} photographs ↓</span></div>`;
+      main.appendChild(el);piles.push({el,cards:[]});
+      deal();
+    }else{
+      const el=document.createElement("section");el.className="grid-sec";el.dataset.where="all of them, newest first";
+      if(sec.place)el.innerHTML=`<div class="label">${sec.place}</div>`;
+      const g=document.createElement("div");g.className="grid";
+      const cnt=sec.items.length;g.style.setProperty("--cols",cnt===4||cnt===2?2:3);
+      sec.items.forEach((it,i)=>{
+        const n=order.indexOf(it);
+        const t=document.createElement("figure");t.className="tile"+(it.w>it.h&&cnt>2?" wide":"");
+        t.style.margin=0;t.innerHTML=`<img src="${it.file}" alt="${it.subject}, ${it.folder}" loading="lazy">`;
+        t.onclick=()=>open(n);g.appendChild(t);
+      });
+      el.appendChild(g);main.appendChild(el);
+    }
+  });
+  const dots=document.getElementById("dots");for(let i=0;i<19*6;i++)dots.appendChild(document.createElement("i"));
+  layout();
+  // deal the cards when a pile comes into view; fade grid tiles in
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.18});
+  document.querySelectorAll(".tile").forEach(x=>io.observe(x));
+  const wo=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)document.getElementById("where").textContent=e.target.dataset.where;}),{rootMargin:"-45% 0px -50% 0px"});
+  document.querySelectorAll("section").forEach(s=>wo.observe(s));
+  addEventListener("scroll",()=>requestAnimationFrame(tick),{passive:true});
+  addEventListener("resize",layout);
+}
+
+/* ---------- pile layout: a loose grid with jitter, so cards overlap but none hides another ---------- */
+function layout(){
+  piles.forEach(({el,cards})=>{
+    const W=el.clientWidth,H=el.clientHeight,n=cards.length;
+    if(n>12){
+      // a whole deck: a loose grid with strong jitter, so the cards cover the table and overlap
+      const cols=mobile()?3:Math.round(Math.sqrt(n*W/H*1.1)),rows=Math.ceil(n/cols);
+      const cw=mobile()?W*.34:Math.min(W/cols*1.25,190);
+      const cellW=(W-cw)/Math.max(1,cols-1),cellH=(H*.86)/rows;
+      cards.forEach((c,i)=>{
+        const h=cw*(c.it.h/c.it.w);c.w=cw;c.h=h;
+        c.x=Math.max(0,Math.min(W-cw,(i%cols)*cellW+(c.jx-.5)*cellW*1.1));
+        c.y=Math.max(8,Math.min(H-h-30,H*.04+Math.floor(i/cols)*cellH+(c.jy-.5)*cellH*1.3-h*.15));
+        c.el.style.width=cw+"px";c.el.firstChild.style.height=h+"px";c.el.style.zIndex=c.z;
+      });
+      return;
+    }
+    const cw=mobile()?W*.4:Math.min(W*.19,250);
+    const cx=W/2,cy=H/2,R=Math.min(W*.3,H*.3)*(0.7+n/20);
+    cards.forEach((c,i)=>{
+      // golden-angle scatter: a tight, overlapping cluster like prints thrown on a table
+      const a=i*2.39996+c.jx*.6, d=Math.sqrt((i+.6)/n)*R;
+      const h=cw*(c.it.h/c.it.w);
+      c.w=cw;c.h=h;
+      c.x=Math.max(0,Math.min(W-cw,cx+Math.cos(a)*d*1.35-cw/2));
+      c.y=Math.max(10,Math.min(H-h-10,cy+Math.sin(a)*d-h/2));
+      c.el.style.width=cw+"px";c.el.firstChild.style.height=h+"px";
+      c.el.style.zIndex=c.z;
+    });
+  });
+  tick();
+}
+
+/* ---------- a new random hand of prints at every visit, and at every shuffle ---------- */
+function deal(){
+  const {el}=piles[0];
+  el.querySelectorAll(".card").forEach(c=>c.remove());
+  el.classList.remove("in");
+  const hand=order.map(it=>[rnd(),it]).sort((a,b)=>a[0]-b[0]).slice(0,Math.min(HAND,order.length)).map(x=>x[1]);
+  piles[0].cards=hand.map((it,i)=>{
+    const c=document.createElement("div");c.className="card";
+    c.innerHTML=`<div class="face" style="--d:${(i*0.09).toFixed(2)}s;--deal:${((rnd()-.5)*40).toFixed(1)}deg"><img src="${it.file}" alt="${it.subject}, ${it.folder}"></div>`;
+    el.appendChild(c);
+    const st={el:c,it,n:order.indexOf(it),x:0,y:0,r:(rnd()-.5)*18,speed:(rnd()-.5)*260,dx:0,dy:0,ty:0,jx:rnd(),jy:rnd(),z:i+1};
+    drag(st,el);return st;
+  });
+  el.dataset.where=hand.length+" of "+order.length+", dealt at random";
+  const w=document.getElementById("where");if(scrollY<innerHeight/2)w.textContent=el.dataset.where;
+  layout();
+  void el.offsetWidth; // restart the deal animation
+  requestAnimationFrame(()=>el.classList.add("in"));
+}
+
+/* ---------- each card drifts at its own speed while the page scrolls ---------- */
+function tick(){
+  const H=innerHeight;
+  piles.forEach(({el,cards})=>{
+    const r=el.getBoundingClientRect();
+    if(r.bottom<-200||r.top>H+200)return;
+    const p=(r.top+r.height/2-H/2)/H;
+    cards.forEach(c=>{c.ty=p*c.speed;place(c);});
+  });
+  const max=document.documentElement.scrollHeight-H;
+  const f=max>0?scrollY/max:0;
+  document.querySelectorAll("#dots i").forEach((d,i,a)=>d.classList.toggle("on",i<Math.round(a.length*f)));
+}
+const place=c=>{c.el.style.transform=`translate(${c.x+c.dx}px,${c.y+c.dy+c.ty}px) rotate(${c.el.classList.contains("drag")?0:c.r}deg)`;};
+
+/* ---------- drag: pick a card up, it comes to the top and stays where you drop it ---------- */
+let zTop=100;
+function drag(c,pile){
+  let sx=0,sy=0,ox=0,oy=0,moved=false,down=false;
+  c.el.addEventListener("pointerdown",e=>{
+    if(e.pointerType==="touch")return; // on phones a tap opens the photo, scrolling stays free
+    down=true;moved=false;sx=e.clientX;sy=e.clientY;ox=c.dx;oy=c.dy;
+    c.el.setPointerCapture(e.pointerId);
+  });
+  c.el.addEventListener("pointermove",e=>{
+    if(!down)return;
+    const mx=e.clientX-sx,my=e.clientY-sy;
+    if(!moved&&Math.hypot(mx,my)>4){moved=true;c.el.classList.add("drag");c.el.style.zIndex=++zTop;}
+    if(moved){c.dx=ox+mx;c.dy=oy+my;place(c);}
+  });
+  const end=()=>{if(!down)return;down=false;if(moved){c.el.classList.remove("drag");c.r=(Math.random()-.5)*10;place(c);}};
+  c.el.addEventListener("pointerup",e=>{const was=moved;end();if(!was)open(c.n);});
+  c.el.addEventListener("pointercancel",end);
+}
+
+/* ---------- lightbox ---------- */
+const lb=document.getElementById("lb");
+function open(i){cur=(i+order.length)%order.length;const it=order[cur];
+  document.getElementById("lbImg").src=it.file;
+  document.getElementById("lbTxt").innerHTML=(it.folder?`<a href="${mapHref(it)}">${it.folder}</a> · `:"")+`${fmtDate(it.date)} · ${it.light} · ${it.subject}`;
+  document.getElementById("lbPal").innerHTML=(it.colors||[]).map(c=>`<i style="background:${c}" title="${c}"></i>`).join("");
+  lb.classList.add("open");}
+const close=()=>lb.classList.remove("open");
+document.getElementById("prev").onclick=()=>open(cur-1);
+document.getElementById("next").onclick=()=>open(cur+1);
+document.getElementById("x").onclick=close;
+lb.addEventListener("click",e=>{if(e.target.classList.contains("box"))close();});
+document.addEventListener("keydown",e=>{if(!lb.classList.contains("open"))return;if(e.key==="Escape")close();if(e.key==="ArrowLeft")open(cur-1);if(e.key==="ArrowRight")open(cur+1);});
+let tx=0;lb.addEventListener("touchstart",e=>tx=e.touches[0].clientX,{passive:true});
+lb.addEventListener("touchend",e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)open(cur+(d<0?1:-1));});
+document.getElementById("shuffle").onclick=e=>{e.preventDefault();scrollTo({top:0,behavior:"smooth"});deal();};
+document.getElementById("toGrid").onclick=e=>{e.preventDefault();document.querySelector(".grid-sec").scrollIntoView({behavior:"smooth"});};
+
+fetch("data.json").then(r=>r.json()).then(d=>build(d.sort((a,b)=>(b.date||"").localeCompare(a.date||""))));
+</script>
+</body>
+</html>

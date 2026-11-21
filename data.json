@@ -1,0 +1,634 @@
+[
+ {
+  "id": "f01",
+  "file": "img/f01.jpg",
+  "folder": "Como",
+  "date": "2026-06-25",
+  "light": "day",
+  "subject": "water",
+  "colors": [
+   "#666854",
+   "#090c03",
+   "#373b2d",
+   "#a6a181"
+  ],
+  "w": 1125,
+  "h": 2000
+ },
+ {
+  "id": "f02",
+  "file": "img/f02.jpg",
+  "folder": "Seregno",
+  "date": "2025-04-30",
+  "light": "sunset",
+  "subject": "sky",
+  "colors": [
+   "#e9af68",
+   "#ab6f46",
+   "#090704",
+   "#b7a78b"
+  ],
+  "w": 1600,
+  "h": 1600
+ },
+ {
+  "id": "f03",
+  "file": "img/f03.jpg",
+  "folder": "Seregno",
+  "date": "2026-10-16",
+  "light": "sunset",
+  "subject": "sky",
+  "colors": [
+   "#8a765a",
+   "#161c1b",
+   "#050901",
+   "#40413c"
+  ],
+  "w": 1125,
+  "h": 2000
+ },
+ {
+  "id": "f04",
+  "file": "img/f04.jpg",
+  "folder": "Cantù",
+  "date": "2025-09-22",
+  "light": "rain",
+  "subject": "detail",
+  "colors": [
+   "#6a684e",
+   "#3b3b28",
+   "#121309",
+   "#9b9673"
+  ],
+  "w": 1600,
+  "h": 1600
+ },
+ {
+  "id": "f05",
+  "file": "img/f05.jpg",
+  "folder": "Capiago Intimiano",
+  "date": "2026-01-28",
+  "light": "night",
+  "subject": "objects",
+  "colors": [
+   "#050700",
+   "#847551",
+   "#541d0d",
+   "#221709"
+  ],
+  "w": 1125,
+  "h": 2000
+ },
+ {
+  "id": "f06",
+  "file": "img/f06.jpg",
+  "folder": "",
+  "date": "2026-06-11",
+  "light": "indoors",
+  "subject": "objects",
+  "colors": [
+   "#0b0b04",
+   "#807350",
+   "#57492d",
+   "#2a2515"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f07",
+  "file": "img/f07.jpg",
+  "folder": "Cantù",
+  "date": "2026-06-17",
+  "light": "day",
+  "subject": "animals",
+  "colors": [
+   "#72735d",
+   "#9b9b7d",
+   "#060903",
+   "#4a4c3c"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f08",
+  "file": "img/f08.jpg",
+  "folder": "Borgonuovo di Piuro",
+  "date": "2026-07-04",
+  "light": "day",
+  "subject": "water",
+  "colors": [
+   "#0d1006",
+   "#2b2c17",
+   "#878363",
+   "#4f4c2d"
+  ],
+  "geo": [
+   46.33171,
+   9.43731
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f09",
+  "file": "img/f09.jpg",
+  "folder": "Cantù",
+  "date": "2025-04-11",
+  "light": "day",
+  "subject": "architecture",
+  "colors": [
+   "#3c4542",
+   "#616b62",
+   "#0f0e07",
+   "#2e2e23"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f10",
+  "file": "img/f10.jpg",
+  "folder": "Seregno",
+  "date": "2025-04-30",
+  "light": "sunset",
+  "subject": "sky",
+  "colors": [
+   "#caab88",
+   "#0a0b08",
+   "#1c1813",
+   "#9a948d"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f11",
+  "file": "img/f11.jpg",
+  "folder": "Seregno",
+  "date": "2025-05-11",
+  "light": "day",
+  "subject": "trees",
+  "colors": [
+   "#6a664d",
+   "#15190e",
+   "#44462a",
+   "#292d19"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f12",
+  "file": "img/f12.jpg",
+  "folder": "Padova",
+  "date": "2025-05-18",
+  "light": "day",
+  "subject": "architecture",
+  "colors": [
+   "#859baa",
+   "#4e4f4a",
+   "#2d2e2a",
+   "#627280"
+  ],
+  "geo": [
+   45.40102,
+   11.87988
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f13",
+  "file": "img/f13.jpg",
+  "folder": "Chiasso",
+  "date": "2025-05-23",
+  "light": "day",
+  "subject": "architecture",
+  "colors": [
+   "#1e2018",
+   "#909384",
+   "#61665e",
+   "#404641"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f14",
+  "file": "img/f14.jpg",
+  "folder": "Seregno",
+  "date": "2025-06-29",
+  "light": "sunset",
+  "subject": "trees",
+  "colors": [
+   "#1b1d10",
+   "#0b0e04",
+   "#726d4b",
+   "#333322"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f15",
+  "file": "img/f15.jpg",
+  "folder": "Como",
+  "date": "2026-09-24",
+  "light": "day",
+  "subject": "water",
+  "colors": [
+   "#050701",
+   "#9c9b7e",
+   "#5e6553",
+   "#2f3428"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f16",
+  "file": "img/f16.jpg",
+  "folder": "",
+  "date": "2025-11-30",
+  "light": "sunset",
+  "subject": "interior",
+  "colors": [
+   "#818eab",
+   "#12171b",
+   "#000101",
+   "#4d5567"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f17",
+  "file": "img/f17.jpg",
+  "folder": "Seregno",
+  "date": "2025-07-29",
+  "light": "dawn",
+  "subject": "trees",
+  "colors": [
+   "#3f4225",
+   "#888357",
+   "#080b02",
+   "#1b1e0e"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f18",
+  "file": "img/f18.jpg",
+  "folder": "Seregno",
+  "date": "2026-10-06",
+  "light": "sunset",
+  "subject": "sky",
+  "colors": [
+   "#918767",
+   "#090c02",
+   "#232515",
+   "#605c46"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f19",
+  "file": "img/f19.jpg",
+  "folder": "Seregno",
+  "date": "2025-08-25",
+  "light": "day",
+  "subject": "trees",
+  "colors": [
+   "#272913",
+   "#767554",
+   "#4c4e2c",
+   "#090a02"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f20",
+  "file": "img/f20.jpg",
+  "folder": "Meda",
+  "date": "2025-08-30",
+  "light": "day",
+  "subject": "trees",
+  "colors": [
+   "#6b6a40",
+   "#171a0b",
+   "#060901",
+   "#35381e"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f21",
+  "file": "img/f21.jpg",
+  "folder": "Seregno",
+  "date": "2025-09-03",
+  "light": "night",
+  "subject": "road",
+  "colors": [
+   "#030500",
+   "#4b4426",
+   "#0e0f05",
+   "#24230f"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f22",
+  "file": "img/f22.jpg",
+  "folder": "Seregno",
+  "date": "2025-09-03",
+  "light": "night",
+  "subject": "places",
+  "colors": [
+   "#79765c",
+   "#3a3c2e",
+   "#191b0f",
+   "#070904"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f23",
+  "file": "img/f23.jpg",
+  "folder": "Morbio Inferiore",
+  "date": "2026-10-30",
+  "light": "day",
+  "subject": "water",
+  "colors": [
+   "#2f3016",
+   "#484828",
+   "#141507",
+   "#646140"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f24",
+  "file": "img/f24.jpg",
+  "folder": "Morbio Inferiore",
+  "date": "2026-10-30",
+  "light": "day",
+  "subject": "trees",
+  "colors": [
+   "#2b2c15",
+   "#424220",
+   "#131508",
+   "#57573e"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f25",
+  "file": "img/f25.jpg",
+  "folder": "Morbio Inferiore",
+  "date": "2026-11-18",
+  "light": "day",
+  "subject": "water",
+  "colors": [
+   "#686837",
+   "#111408",
+   "#414122",
+   "#282815"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f26",
+  "file": "img/f26.jpg",
+  "folder": "Morbio Inferiore",
+  "date": "2026-11-18",
+  "light": "day",
+  "subject": "trees",
+  "colors": [
+   "#676233",
+   "#2a2a17",
+   "#121406",
+   "#454328"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f27",
+  "file": "img/f27.jpg",
+  "folder": "Como",
+  "date": "2025-10-06",
+  "light": "sunset",
+  "subject": "road",
+  "colors": [
+   "#10140f",
+   "#394a59",
+   "#292e2d",
+   "#777569"
+  ],
+  "w": 1600,
+  "h": 1966
+ },
+ {
+  "id": "f28",
+  "file": "img/f28.jpg",
+  "folder": "Como",
+  "date": "2025-10-17",
+  "light": "day",
+  "subject": "road",
+  "colors": [
+   "#9c9776",
+   "#68644b",
+   "#423f28",
+   "#18190d"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f29",
+  "file": "img/f29.jpg",
+  "folder": "",
+  "date": "2025-11-05",
+  "light": "sunset",
+  "subject": "animals",
+  "colors": [
+   "#73725c",
+   "#424335",
+   "#040500",
+   "#a8a485"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f30",
+  "file": "img/f30.jpg",
+  "folder": "",
+  "date": "2025-11-21",
+  "light": "day",
+  "subject": "detail",
+  "colors": [
+   "#a9a180",
+   "#080a02",
+   "#44422d",
+   "#747058"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f31",
+  "file": "img/f31.jpg",
+  "folder": "Cantù",
+  "date": "2025-12-23",
+  "light": "night",
+  "subject": "architecture",
+  "colors": [
+   "#192439",
+   "#12141a",
+   "#040403",
+   "#000001"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f32",
+  "file": "img/f32.jpg",
+  "folder": "",
+  "date": "2026-02-07",
+  "light": "indoors",
+  "subject": "art",
+  "colors": [
+   "#463e29",
+   "#191309",
+   "#b0a587",
+   "#75705a"
+  ],
+  "w": 1600,
+  "h": 1200
+ },
+ {
+  "id": "f33",
+  "file": "img/f33.jpg",
+  "folder": "Assisi",
+  "date": "2026-03-13",
+  "light": "day",
+  "subject": "architecture",
+  "colors": [
+   "#9ba4a3",
+   "#4e5045",
+   "#292b1f",
+   "#6a757c"
+  ],
+  "geo": [
+   43.07485,
+   12.60581
+  ],
+  "w": 1600,
+  "h": 1200
+ },
+ {
+  "id": "f34",
+  "file": "img/f34.jpg",
+  "folder": "Assisi",
+  "date": "2026-03-13",
+  "light": "night",
+  "subject": "architecture",
+  "colors": [
+   "#7c6f43",
+   "#38331b",
+   "#040500",
+   "#010200"
+  ],
+  "geo": [
+   43.05822,
+   12.5803
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f35",
+  "file": "img/f35.jpg",
+  "folder": "Assisi",
+  "date": "2026-03-13",
+  "light": "night",
+  "subject": "architecture",
+  "colors": [
+   "#1b190f",
+   "#726b54",
+   "#403a2a",
+   "#030500"
+  ],
+  "geo": [
+   43.07485,
+   12.60581
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f36",
+  "file": "img/f36.jpg",
+  "folder": "Bellano",
+  "date": "2026-03-27",
+  "light": "day",
+  "subject": "water",
+  "colors": [
+   "#5f6666",
+   "#384448",
+   "#1d221b",
+   "#7b8f9a"
+  ],
+  "w": 1600,
+  "h": 1200
+ },
+ {
+  "id": "f37",
+  "file": "img/f37.jpg",
+  "folder": "",
+  "date": "2026-05-01",
+  "light": "indoors",
+  "subject": "animals",
+  "colors": [
+   "#a08b64",
+   "#51452b",
+   "#040400",
+   "#221b0c"
+  ],
+  "w": 1500,
+  "h": 2000
+ },
+ {
+  "id": "f38",
+  "file": "img/f38.jpg",
+  "folder": "Padova",
+  "date": "2021-12-15",
+  "light": "indoors",
+  "subject": "art",
+  "colors": [
+   "#615d4f",
+   "#928a79",
+   "#2d2c23",
+   "#1b3d54"
+  ],
+  "geo": [
+   45.41187,
+   11.87952
+  ],
+  "w": 1600,
+  "h": 1294
+ }
+]
