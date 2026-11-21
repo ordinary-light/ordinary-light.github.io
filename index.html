@@ -15,9 +15,9 @@
     --shadow:0 1px 2px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12);
     --lift:0 2px 4px rgba(0,0,0,.1),0 24px 50px rgba(0,0,0,.25);
     --serif:'EB Garamond','Times New Roman',Georgia,serif;
-    --sans:'Inter',system-ui,-apple-system,sans-serif;
+    --sans:'Manrope',system-ui,-apple-system,sans-serif;
     --display:'Archivo Black','Arial Black',system-ui,sans-serif;
-    --side:290px;--r:12px;
+    --side:320px;--r:12px;
   }
   @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121211;--ink:#EEEBE5;--gray:#A19C93;--faint:#66625C;--line:#2A2825;--tile:#1D1C1A;--shadow:0 1px 2px rgba(0,0,0,.5),0 10px 28px rgba(0,0,0,.5);--lift:0 2px 4px rgba(0,0,0,.5),0 28px 60px rgba(0,0,0,.7);}}
   :root[data-theme="dark"]{--bg:#121211;--ink:#EEEBE5;--gray:#A19C93;--faint:#66625C;--line:#2A2825;--tile:#1D1C1A;--shadow:0 1px 2px rgba(0,0,0,.5),0 10px 28px rgba(0,0,0,.5);--lift:0 2px 4px rgba(0,0,0,.5),0 28px 60px rgba(0,0,0,.7);}
@@ -29,15 +29,15 @@
   /* ---------- fixed side column ---------- */
   aside{position:fixed;left:0;top:0;bottom:0;width:var(--side);padding:34px 30px 28px;display:flex;flex-direction:column;gap:20px;z-index:100;background:var(--bg);}
   aside h1{font-family:var(--display);font-weight:400;font-size:42px;line-height:.9;letter-spacing:-.02em;margin:0;text-transform:uppercase;}
-  .dots{display:grid;grid-template-columns:repeat(19,1fr);gap:2px;width:154px;}
+  .dots{display:grid;grid-template-columns:repeat(19,1fr);gap:2px;width:170px;}
   .dots i{aspect-ratio:1;background:var(--ink);opacity:.1;transition:opacity .3s ease;}
   .dots i.on{opacity:.95;}
-  aside nav{display:flex;gap:16px;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;margin-top:auto;}
+  aside nav{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-top:auto;}
   aside nav a{text-decoration:none;color:var(--gray);} aside nav a:hover{color:var(--ink);}
-  aside .intro{font-size:11.5px;line-height:1.5;color:var(--gray);max-width:210px;margin:0;}
+  aside .intro{font-size:14px;line-height:1.5;color:var(--gray);max-width:250px;margin:0;}
   aside .intro b{font-weight:500;color:var(--ink);}
-  aside .where{font-size:11px;letter-spacing:.06em;text-transform:lowercase;color:var(--ink);min-height:1.5em;}
-  aside .also{font-size:10.5px;letter-spacing:.05em;text-transform:lowercase;color:var(--faint);line-height:1.8;}
+  aside .where{font-size:13px;letter-spacing:.06em;text-transform:lowercase;color:var(--ink);min-height:1.5em;}
+  aside .also{font-size:12px;letter-spacing:.05em;text-transform:lowercase;color:var(--faint);line-height:1.8;}
   aside .also a{color:var(--gray);text-decoration:none;border-bottom:1px solid var(--line);white-space:nowrap;}
   aside .also a:hover{color:var(--ink);}
 
@@ -107,11 +107,11 @@
   <div class="dots" id="dots"></div>
   <p class="intro"><b>Photographs by light.</b> The prints are on the table: move them around, open one, or scroll down for the grid.</p>
   <div class="where" id="where"></div>
-  <nav><a href="#" id="shuffle">shuffle</a><a href="#" id="toGrid">grid ↓</a><a href="map.html">map →</a></nav>
+  <nav><a href="#" id="shuffle">shuffle</a><a href="#" id="toGrid">grid ↓</a><a href="map.html">map →</a><a href="#" id="toTop">top ↑</a></nav>
   <div class="also">by <a href="https://ivana-dicarlo.pages.dev/" target="_blank" rel="noopener">ivana di carlo</a><br>also: <a href="https://thesouldevotional.github.io/soul/" target="_blank" rel="noopener">soul</a> · <a href="https://thinkingcapsules.github.io/" target="_blank" rel="noopener">thinking capsules</a> · <a href="https://anthology-lab.github.io/" target="_blank" rel="noopener">anthology-lab</a></div>
 </aside>
 <main id="main"></main>
-<footer>design after readymag portfolios · fonts and colour logic from <a href="https://github.com/Laurencemdonald/field-notes" target="_blank" rel="noopener">field notes</a> by laurence mcdonald (mit license)</footer>
+<footer>design after readymag portfolios · colour logic from <a href="https://github.com/Laurencemdonald/field-notes" target="_blank" rel="noopener">field notes</a> by laurence mcdonald (mit license)</footer>
 
 <div class="lb" id="lb">
   <div class="box">
@@ -289,6 +289,7 @@ document.addEventListener("keydown",e=>{if(!lb.classList.contains("open"))return
 let tx=0;lb.addEventListener("touchstart",e=>tx=e.touches[0].clientX,{passive:true});
 lb.addEventListener("touchend",e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)open(cur+(d<0?1:-1));});
 document.getElementById("shuffle").onclick=e=>{e.preventDefault();scrollTo({top:0,behavior:"smooth"});deal();};
+document.getElementById("toTop").onclick=e=>{e.preventDefault();scrollTo({top:0,behavior:"smooth"});};
 document.getElementById("toGrid").onclick=e=>{e.preventDefault();document.querySelector(".grid-sec").scrollIntoView({behavior:"smooth"});};
 
 fetch("data.json").then(r=>r.json()).then(d=>build(d.sort((a,b)=>(b.date||"").localeCompare(a.date||""))));

@@ -16,7 +16,7 @@
     --ink:#202124;--ink-2:#3c4043;--gray:#5f6368;--line:#e3e3e6;--faint:#9aa0a6;
     --blue:#1a73e8;--blue-dark:#1557b0;--dot:#4285f4;--green:#188038;--red:#ea4335;
     --serif:'EB Garamond','Times New Roman',Georgia,serif;
-    --sans:'Inter',system-ui,-apple-system,sans-serif;
+    --sans:'Manrope',system-ui,-apple-system,sans-serif;
     --shadow:0 1px 2px rgba(60,64,67,.3),0 2px 6px 2px rgba(60,64,67,.15);
     --panel:#ffffff;--panel-2:rgba(255,255,255,.92);--stage:#f7f7f8;--page:#f5f3f0;--chip-on:#e8f0fe;--chip-on-ink:#1557b0;--bar:#d2e3fc;--pin-border:#ffffff;
   }
@@ -54,14 +54,25 @@
   /* ---------- top chrome ---------- */
   .brand{position:fixed;top:16px;left:16px;z-index:10;background:var(--panel);border-radius:24px;box-shadow:var(--shadow);padding:9px 18px 9px 14px;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);}
   .brand .back{font-size:18px;color:var(--gray);line-height:1;}
-  .brand h1{font-family:var(--serif);font-weight:500;font-size:19px;margin:0;line-height:1;}
+  @font-face{font-family:'Archivo Black';src:url(fonts/archivo-black.woff2) format('woff2');font-weight:400;font-display:swap;}
+  .brand h1{font-family:'Archivo Black','Arial Black',system-ui,sans-serif;font-weight:400;font-size:15px;letter-spacing:-.01em;text-transform:uppercase;margin:0;line-height:1;}
 
-  /* place chips, like Maps' category chips */
-  .chips{position:fixed;top:70px;left:16px;right:16px;z-index:9;display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none;}
-  .chips::-webkit-scrollbar{display:none;}
-  .chip{flex:0 0 auto;background:var(--panel);border:0;border-radius:16px;box-shadow:var(--shadow);padding:7px 14px;font:500 13px var(--sans);color:var(--ink-2);cursor:pointer;white-space:nowrap;}
-  .chip span{color:var(--faint);font-weight:400;margin-left:4px;}
-  .chip.on{background:var(--chip-on);color:var(--chip-on-ink);}
+  /* place finder, like the Maps search box: grows into a list however many places there are */
+  .finder{position:fixed;top:70px;left:16px;width:340px;max-width:calc(100% - 32px);z-index:12;}
+  .finder .box{display:flex;align-items:center;gap:10px;background:var(--panel);border-radius:24px;box-shadow:var(--shadow);padding:0 16px;height:46px;}
+  .finder.open .box{border-radius:20px 20px 0 0;box-shadow:none;}
+  .finder svg{flex:0 0 auto;width:18px;height:18px;fill:var(--gray);}
+  .finder input{flex:1;min-width:0;border:0;outline:0;background:none;font:400 14px var(--sans);color:var(--ink);}
+  .finder input::placeholder{color:var(--gray);}
+  .finder .list{display:none;background:var(--panel);border-radius:0 0 20px 20px;box-shadow:var(--shadow);max-height:min(56vh,440px);overflow-y:auto;padding:4px 0 8px;border-top:1px solid var(--line);}
+  .finder.open .list{display:block;}
+  .finder .row{display:flex;align-items:center;gap:12px;width:100%;border:0;background:none;padding:8px 16px;cursor:pointer;text-align:left;font:400 14px var(--sans);color:var(--ink);}
+  .finder .row:hover,.finder .row.hi{background:var(--chip-on);}
+  .finder .row.on{color:var(--chip-on-ink);}
+  .finder .row .th{width:34px;height:34px;border-radius:50%;background:var(--line) center/cover;flex:0 0 auto;}
+  .finder .row .nm{flex:1;}
+  .finder .row .ct{font-size:12px;color:var(--faint);}
+  .finder .empty{padding:10px 16px;font:400 13px var(--sans);color:var(--gray);}
 
   /* ---------- markers ---------- */
   .mk{cursor:pointer;}
@@ -123,8 +134,10 @@
   @media (max-width:700px){
     .card{left:8px;right:8px;bottom:8px;width:auto;max-width:none;}
     .card .gal{height:120px;}
-    .chips{top:auto;bottom:16px;}
-    .card.on ~ .chips{display:none;}
+    .finder{top:auto;bottom:16px;width:auto;right:16px;}
+    .finder.open .box{border-radius:0 0 20px 20px;}
+    .finder .list{position:absolute;bottom:46px;left:0;right:0;border-radius:20px 20px 0 0;border-top:0;border-bottom:1px solid var(--line);}
+    .card.on ~ .finder{display:none;}
     .links{display:none;}
   }
 </style>
@@ -156,7 +169,10 @@
     <div class="bars-lab"><span>photos by month</span><span id="cRange"></span></div>
   </div>
 </div>
-<div class="chips" id="chips"></div>
+<div class="finder" id="finder">
+  <div class="box"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 9.5 16a6.5 6.5 0 0 0 4.2-1.6l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg><input id="fq" type="text" autocomplete="off" spellcheck="false"></div>
+  <div class="list" id="flist"></div>
+</div>
 <div class="links">by <a href="https://ivana-dicarlo.pages.dev/" target="_blank" rel="noopener">ivana di carlo</a><span class="also">also: <a href="https://thesouldevotional.github.io/soul/" target="_blank" rel="noopener">soul</a> · <a href="https://thinkingcapsules.github.io/" target="_blank" rel="noopener">thinking capsules</a> · <a href="https://anthology-lab.github.io/" target="_blank" rel="noopener">anthology-lab</a></span></div>
 
 <div class="lightbox" id="lightbox"><img alt=""></div>
@@ -217,12 +233,12 @@ function card(town, exact){
   const r=[fmt(items[0].date), fmt(items[items.length-1].date)].filter(Boolean);
   $("cRange").textContent = r[0]===r[1] ? r[0] : r.join(" – ");
   const c=$("card"); c.classList.remove("on"); void c.offsetWidth; c.classList.add("on");
-  document.querySelectorAll(".chip").forEach(ch=>ch.classList.toggle("on", ch.dataset.place===town));
+  document.querySelectorAll(".finder .row").forEach(r=>r.classList.toggle("on", r.dataset.place===town));
   history.replaceState(null,"","#"+encodeURIComponent(town));
 }
 function close_(){
   $("card").classList.remove("on"); you.remove();
-  document.querySelectorAll(".chip").forEach(ch=>ch.classList.remove("on"));
+  document.querySelectorAll(".finder .row").forEach(r=>r.classList.remove("on"));
   history.replaceState(null,"",location.pathname);
   overview(1600);
 }
@@ -275,13 +291,43 @@ function build(){
     el.title=g.town; el.onclick=e=>{ e.stopPropagation(); go(g.town); };
     g.el=el; new maplibregl.Marker({element:el, anchor:"bottom", offset:[0,-6]}).setLngLat(g.coord).addTo(map);
   });
-  const counts={}; DATA.forEach(x=>{ if(x.folder) counts[x.folder]=(counts[x.folder]||0)+1; });
-  Object.keys(counts).sort((a,b)=>a.localeCompare(b)).forEach(t=>{
-    const b=document.createElement("button"); b.className="chip"; b.dataset.place=t;
-    b.innerHTML=t+"<span>"+counts[t]+"</span>"; b.onclick=()=>go(t); $("chips").appendChild(b);
-  });
+  finder(groups);
   overview(0);
   return decodeURIComponent(location.hash.slice(1));
+}
+
+/* ---------- place finder ---------- */
+function finder(groups){
+  const towns={};
+  groups.forEach(g=>{ const t=towns[g.town]||(towns[g.town]={n:0,img:g.items[0].file}); t.n+=g.items.length; });
+  const names=Object.keys(towns).sort((a,b)=>a.localeCompare(b));
+  const f=$("finder"), q=$("fq"), list=$("flist");
+  q.placeholder="Search "+names.length+" places";
+  let hi=-1;
+  const draw=()=>{
+    const s=q.value.trim().toLowerCase();
+    const shown=names.filter(t=>t.toLowerCase().includes(s));
+    list.innerHTML=shown.length?"":'<div class="empty">No place with that name</div>';
+    hi=Math.min(hi,shown.length-1);
+    shown.forEach((t,i)=>{
+      const b=document.createElement("button"); b.className="row"+(i===hi?" hi":""); b.dataset.place=t;
+      b.innerHTML='<span class="th"></span><span class="nm"></span><span class="ct">'+towns[t].n+(towns[t].n>1?" photos":" photo")+'</span>';
+      b.querySelector(".th").style.backgroundImage="url('"+towns[t].img+"')"; b.querySelector(".nm").textContent=t;
+      b.onclick=()=>pick(t); list.appendChild(b);
+    });
+    return shown;
+  };
+  const pick=t=>{ f.classList.remove("open"); q.value=""; q.blur(); go(t); };
+  q.addEventListener("focus",()=>{ hi=-1; draw(); f.classList.add("open"); });
+  q.addEventListener("input",()=>{ hi=0; draw(); f.classList.add("open"); });
+  q.addEventListener("keydown",e=>{
+    const shown=names.filter(t=>t.toLowerCase().includes(q.value.trim().toLowerCase()));
+    if(e.key==="ArrowDown"){ hi=Math.min(hi+1,shown.length-1); draw(); e.preventDefault(); }
+    if(e.key==="ArrowUp"){ hi=Math.max(hi-1,0); draw(); e.preventDefault(); }
+    if(e.key==="Enter"&&shown.length) pick(shown[Math.max(hi,0)]);
+    if(e.key==="Escape"){ f.classList.remove("open"); q.blur(); }
+  });
+  document.addEventListener("pointerdown",e=>{ if(!f.contains(e.target)) f.classList.remove("open"); });
 }
 
 /* ---------- start ---------- */
