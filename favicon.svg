@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .card{fill:#141312}.sun{fill:#E8A26A}.line{fill:#F3F2EF}
+    @media (prefers-color-scheme:dark){.card{fill:#EEEBE5}.sun{fill:#D9804A}.line{fill:#141312}}
+  </style>
+  <!-- a print on the table: low sun on the horizon -->
+  <rect class="card" x="2" y="2" width="28" height="28" rx="7"/>
+  <clipPath id="c"><rect x="0" y="0" width="32" height="20"/></clipPath>
+  <circle class="sun" cx="16" cy="20" r="8.5" clip-path="url(#c)"/>
+  <rect class="line" x="6" y="21.5" width="20" height="2" rx="1"/>
+</svg>
