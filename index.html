@@ -12,6 +12,7 @@
 <!-- Archivo Black: SIL Open Font License. Fonts from Field Notes by Laurence McDonald (MIT). -->
 <style>
   @font-face{font-family:'Archivo Black';src:url(fonts/archivo-black.woff2) format('woff2');font-weight:400;font-display:swap;}
+  @font-face{font-family:'Archivo Wide';src:url(fonts/archivo-var.woff2) format('woff2');font-weight:100 900;font-stretch:62% 125%;font-display:swap;}
   :root{
     --bg:#F3F2EF;--ink:#141312;--gray:#6E6A62;--faint:#A7A196;--line:#DCD8D0;--tile:#E8E6E1;
     --shadow:0 1px 2px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12);
@@ -30,10 +31,10 @@
 
   /* ---------- fixed side column ---------- */
   aside{position:fixed;left:0;top:0;bottom:0;width:var(--side);padding:34px 30px 28px;display:flex;flex-direction:column;gap:20px;z-index:100;background:var(--bg);}
-  aside h1{font-family:var(--display);font-weight:400;font-size:42px;line-height:.9;letter-spacing:-.02em;margin:0;text-transform:uppercase;}
-  .dots{display:grid;grid-template-columns:repeat(19,1fr);gap:2px;width:170px;}
-  .dots i{aspect-ratio:1;background:var(--ink);opacity:.1;transition:opacity .3s ease;}
-  .dots i.on{opacity:.95;}
+  /* logo: the word fills the column, the pixel word below matches its width */
+  aside h1{margin:0;display:flex;flex-direction:column;gap:9px;width:100%;color:var(--ink);}
+  aside h1 .word{font-family:'Archivo Wide','Archivo Black',sans-serif;font-weight:900;font-stretch:125%;font-size:39px;line-height:.8;letter-spacing:-.01em;text-transform:uppercase;white-space:nowrap;}
+  aside h1 .px{display:block;width:0;min-width:100%;height:auto;} /* width 0: the dots take the word's width, never set it */
   aside nav{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-top:auto;}
   aside nav a{text-decoration:none;color:var(--gray);} aside nav a:hover{color:var(--ink);}
   aside .intro{font-size:14px;line-height:1.5;color:var(--gray);max-width:250px;margin:0;}
@@ -92,7 +93,7 @@
   @media (max-width:760px){
     :root{--side:0px;--r:10px;}
     aside{position:sticky;top:0;bottom:auto;width:auto;padding:14px 16px;gap:10px;flex-direction:row;flex-wrap:wrap;align-items:center;}
-    aside h1{font-size:22px;} aside .dots,aside .intro,aside .where,aside .also{display:none;}
+    aside h1{width:auto;gap:4px;} aside h1 .word{font-size:20px !important;} aside .intro,aside .where,aside .also{display:none;}
     aside nav{margin:0 0 0 auto;}
     main{padding:0 16px 60px;}
     .pile{height:115vh;}
@@ -105,13 +106,17 @@
 </head>
 <body>
 <aside>
-  <h1>Ordinary<br>Light</h1>
-  <div class="dots" id="dots"></div>
+  <h1 data-logo>Ordinary Light</h1>
   <p class="intro"><b>Photographs by light.</b> The prints are on the table: move them around, open one, or scroll down for the grid.</p>
   <div class="where" id="where"></div>
   <nav><a href="#" id="shuffle">shuffle</a><a href="#" id="toGrid">grid ↓</a><a href="map.html">map →</a><a href="#" id="toTop">top ↑</a></nav>
   <div class="also">by <a href="https://ivana-dicarlo.pages.dev/" target="_blank" rel="noopener">ivana di carlo</a><br>also: <a href="https://thesouldevotional.github.io/soul/" target="_blank" rel="noopener">soul</a> · <a href="https://thinkingcapsules.github.io/" target="_blank" rel="noopener">thinking capsules</a> · <a href="https://anthology-lab.github.io/" target="_blank" rel="noopener">anthology-lab</a></div>
 </aside>
+<script src="logo.js"></script>
+<script>
+// fit the logo word to the column
+(function fit(){const w=document.querySelector('aside h1 .word');if(!w)return;const go=()=>{if(innerWidth<=760){w.style.fontSize='';return;}w.style.fontSize='100px';const box=w.parentNode.clientWidth;w.style.fontSize=(100*box/w.scrollWidth).toFixed(2)+'px';};(document.fonts?document.fonts.ready:Promise.resolve()).then(go);addEventListener('resize',go);})();
+</script>
 <main id="main"></main>
 <footer>design after readymag portfolios · colour logic from <a href="https://github.com/Laurencemdonald/field-notes" target="_blank" rel="noopener">field notes</a> by laurence mcdonald (mit license)</footer>
 
@@ -176,7 +181,6 @@ function build(items){
       el.appendChild(g);main.appendChild(el);
     }
   });
-  const dots=document.getElementById("dots");for(let i=0;i<19*6;i++)dots.appendChild(document.createElement("i"));
   layout();
   // deal the cards when a pile comes into view; fade grid tiles in
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.18});
@@ -251,7 +255,6 @@ function tick(){
   });
   const max=document.documentElement.scrollHeight-H;
   const f=max>0?scrollY/max:0;
-  document.querySelectorAll("#dots i").forEach((d,i,a)=>d.classList.toggle("on",i<Math.round(a.length*f)));
 }
 const place=c=>{c.el.style.transform=`translate(${c.x+c.dx}px,${c.y+c.dy+c.ty}px) rotate(${c.el.classList.contains("drag")?0:c.r}deg)`;};
 
